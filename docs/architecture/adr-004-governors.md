@@ -15,7 +15,7 @@ special class of participants within the governance module. Unlike traditional
 Cosmos-SDK governance, users can delegate their governance power to active
 governors who meet specific eligibility criteria (e.g., minimum governance
 self-delegation) while staking delegations to validators are not counted towards
-determining their governance votint power (no validator inheritance).
+determining their governance voting power (no validator inheritance).
 The proposed changes alters vote tallying adding a separate and governance-specific
 delegation mechanism to the one in `x/staking`, while trying to minimize impact on
 tally and overall chain performance, and also define rules for transitioning
