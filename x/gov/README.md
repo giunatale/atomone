@@ -120,6 +120,11 @@ staking token of the chain.
         - [submit-legacy-proposal](#submit-legacy-proposal)
         - [vote](#vote-3)
         - [weighted-vote](#weighted-vote)
+        - [create-governor](#create-governor)
+        - [edit-governor](#edit-governor-1)
+        - [update-governor-status](#update-governor-status-1)
+        - [delegate-governor](#delegate-governor)
+        - [undelegate-governor](#undelegate-governor)
     - [gRPC](#grpc)
       - [Proposal](#proposal-1)
       - [Proposals](#proposals-2)
@@ -1581,6 +1586,80 @@ Example:
 
 ```bash
 atomoned tx gov weighted-vote 1 yes=0.5,no=0.5 --from atone1..
+```
+
+##### create-governor
+
+The `create-governor` command allows users to create a governor.
+
+```bash
+atomoned tx gov create-governor [base-address] [moniker] [identity] [website] [security-contact] [details] [flags]
+```
+
+Example:
+
+```bash
+atomoned tx gov create-governor atone1.. "NewGovernor" "ABC123DEF5678" "www.mywebsite.com" "" "-" --from atone1..
+```
+
+##### edit-governor
+
+The `edit-governor` command allows users to edit a governor.
+
+```bash
+atomoned tx gov edit-governor [base-address] [moniker] [identity] [website] [security-contact] [details] [flags]
+```
+
+Example:
+
+```bash
+atomoned tx gov edit-governor atone1.. "EditedGovernor" "ABC123DEF5678" "www.mywebsite.com" "" "-" --from atone1..
+```
+
+##### update-governor-status
+
+The `update-governor-status` command allows users to update a governor's status.
+The update from inactive to active also requires the minimum self-delegation to
+be satisfied.
+
+```bash
+atomoned tx gov update-governor-status [base-address] [status] [flags]
+```
+
+Example:
+
+```bash
+atomoned tx gov update-governor-status atone1.. active --from atone1..
+```
+
+##### delegate-governor
+
+The `delegate-governor` command allows users to delegate governance voting power
+to a governor.
+
+```bash
+atomoned tx gov delegate-governor [delegator-address] [governor-address] [flags]
+```
+
+Example:
+
+```bash
+atomoned tx gov delegate-governor atone1.. atonegov1.. --from atone1..
+```
+
+##### undelegate-governor
+
+The `undelegate-governor` command allows users to undelegate governance voting power
+and return to direct voting only.
+
+```bash
+atomoned tx gov undelegate-governor [delegator-address] [flags]
+```
+
+Example:
+
+```bash
+atomoned tx gov undelegate-governor atone1.. --from atone1..
 ```
 
 ### gRPC
