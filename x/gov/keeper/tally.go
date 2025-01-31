@@ -260,5 +260,15 @@ func getGovernorVotingPower(governor v1.GovernorGovInfo, currValidators map[stri
 			votingPower = votingPower.Add(sharesAfterDeductions.MulInt(val.GetBondedTokens()).Quo(val.GetDelegatorShares()))
 		}
 	}
-	return votingPower
+
+	// governors delegated voting power is quadratic, in this way if individuals vote themselves instead of relying on the
+	// vote of their delegated governor they will do so with more voting power.
+	// The governor's voting power determined by their own stake is accounted for while iterating over the votes, and therefore is
+	// not included here and not subject to the quadratic reduction.
+	votingPower, err := votingPower.ApproxSqrt()
+	if err != nil {
+		panic(err)
+	}
+
+	return
 }
