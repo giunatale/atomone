@@ -96,7 +96,7 @@ func TestTally(t *testing.T) {
 			setup: func(s *fixture) {
 				// del0 VP=5 del=gov0 didn't vote
 				s.delegate(s.delAddrs[0], s.valAddrs[0], 2)
-				s.delegate(s.delAddrs[0], s.valAddrs[1], 3)
+				s.delegate(s.delAddrs[0], s.valAddrs[1], 2)
 				s.keeper.DelegateToGovernor(s.ctx, s.delAddrs[0], s.govAddrs[0])
 				// gov0 VP=3 vote=yes
 				s.governorVote(s.govAddrs[0], v1.VoteOption_VOTE_OPTION_YES)
@@ -105,7 +105,7 @@ func TestTally(t *testing.T) {
 			expectedPass: true,
 			expectedBurn: false,
 			expectedTally: v1.TallyResult{
-				YesCount:     "8",
+				YesCount:     "5",
 				AbstainCount: "0",
 				NoCount:      "0",
 			},
@@ -223,7 +223,7 @@ func TestTally(t *testing.T) {
 			expectedPass: false,
 			expectedBurn: false,
 			expectedTally: v1.TallyResult{
-				YesCount:     "11",
+				YesCount:     "9",
 				AbstainCount: "4",
 				NoCount:      "6",
 			},
@@ -263,8 +263,8 @@ func TestTally(t *testing.T) {
 			expectedPass: false,
 			expectedBurn: false,
 			expectedTally: v1.TallyResult{
-				YesCount:     "11",
-				AbstainCount: "13",
+				YesCount:     "9",
+				AbstainCount: "9",
 				NoCount:      "6",
 			},
 		},
@@ -535,7 +535,7 @@ func TestTally(t *testing.T) {
 			err := govKeeper.SetParams(ctx, params)
 			require.NoError(t, err)
 			// Create the test fixture
-			s := newFixture(t, ctx, 10, 6, 3, govKeeper, mocks)
+			s := newFixture(t, ctx, 7, 6, 3, govKeeper, mocks)
 			// Setup governor self delegation
 			for _, govAddr := range s.govAddrs {
 				accAddr := sdk.AccAddress(govAddr)
@@ -603,7 +603,7 @@ func TestHasReachedQuorum(t *testing.T) {
 			name:         "quorum reached by governor vote inheritance",
 			proposalMsgs: TestProposal,
 			setup: func(s *fixture) {
-				s.delegate(s.delAddrs[0], s.valAddrs[0], 500000)
+				s.delegate(s.delAddrs[0], s.valAddrs[0], 4)
 				s.keeper.DelegateToGovernor(s.ctx, s.delAddrs[0], s.govAddrs[0])
 				s.governorVote(s.govAddrs[0], v1.VoteOption_VOTE_OPTION_ABSTAIN)
 			},
@@ -666,7 +666,7 @@ func TestHasReachedQuorum(t *testing.T) {
 			err := govKeeper.SetParams(ctx, params)
 			require.NoError(t, err)
 			// Submit and activate a proposal
-			s := newFixture(t, ctx, 10, 5, 3, govKeeper, mocks)
+			s := newFixture(t, ctx, 7, 5, 3, govKeeper, mocks)
 			// Setup governor self delegation
 			for _, govAddr := range s.govAddrs {
 				accAddr := sdk.AccAddress(govAddr)

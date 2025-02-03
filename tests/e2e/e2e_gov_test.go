@@ -318,8 +318,12 @@ func (s *IntegrationTestSuite) testGovGovernors() {
 		// assert tally result
 		prop, err := queryGovProposal(chainAAPIEndpoint, proposalCounter)
 		s.Require().NoError(err)
+		// calculate voting power accounting gor quadratic power reduction applied to governance delegations
+		delDelegationSqrtAmt, err := delDelegation.Amount.ToLegacyDec().ApproxSqrt()
+		s.Require().NoError(err)
+		votingPower := delDelegationSqrtAmt.TruncateInt().Add(govDelegation.Amount)
 		expectedTally := &govtypesv1.TallyResult{
-			YesCount:     totalDelegations.Amount.String(),
+			YesCount:     votingPower.String(),
 			NoCount:      "0",
 			AbstainCount: "0",
 		}
