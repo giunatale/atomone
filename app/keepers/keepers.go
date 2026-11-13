@@ -1,12 +1,6 @@
 package keepers
 
 import (
-	ibcprovider "github.com/allinbits/vaas/x/vaas/provider"
-	"github.com/allinbits/vaas/x/vaas/provider/govadapter"
-	ibcproviderkeeper "github.com/allinbits/vaas/x/vaas/provider/keeper"
-	providertypes "github.com/allinbits/vaas/x/vaas/provider/types"
-	vaastypes "github.com/allinbits/vaas/x/vaas/types"
-
 	ica "github.com/cosmos/ibc-go/v10/modules/apps/27-interchain-accounts"
 	icacontroller "github.com/cosmos/ibc-go/v10/modules/apps/27-interchain-accounts/controller"
 	icacontrollerkeeper "github.com/cosmos/ibc-go/v10/modules/apps/27-interchain-accounts/controller/keeper"
@@ -76,6 +70,12 @@ import (
 	atomonegovkeeper "github.com/atomone-hub/atomone/x/gov/keeper"
 	photonkeeper "github.com/atomone-hub/atomone/x/photon/keeper"
 	photontypes "github.com/atomone-hub/atomone/x/photon/types"
+
+	ibcprovider "github.com/allinbits/vaas/x/vaas/provider"
+	"github.com/allinbits/vaas/x/vaas/provider/govadapter"
+	ibcproviderkeeper "github.com/allinbits/vaas/x/vaas/provider/keeper"
+	providertypes "github.com/allinbits/vaas/x/vaas/provider/types"
+	vaastypes "github.com/allinbits/vaas/x/vaas/types"
 )
 
 type AppKeepers struct {
@@ -322,7 +322,7 @@ func NewAppKeeper(
 		appKeepers.IBCKeeper.ChannelKeeperV2,
 		appKeepers.StakingKeeper,
 		appKeepers.SlashingKeeper,
-		vaasPhotonRate{photon: appKeepers.PhotonKeeper, bank: appKeepers.BankKeeper, staking: appKeepers.StakingKeeper},
+		VAASPhotonRate{Photon: appKeepers.PhotonKeeper, Bank: appKeepers.BankKeeper, Staking: appKeepers.StakingKeeper},
 		appKeepers.AccountKeeper,
 		appKeepers.BankKeeper,
 		appKeepers.DistrKeeper,
