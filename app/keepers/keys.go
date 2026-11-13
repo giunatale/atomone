@@ -1,6 +1,8 @@
 package keepers
 
 import (
+	providerstypes "github.com/allinbits/vaas/x/vaas/provider/types"
+
 	icacontrollertypes "github.com/cosmos/ibc-go/v10/modules/apps/27-interchain-accounts/controller/types"
 	icahosttypes "github.com/cosmos/ibc-go/v10/modules/apps/27-interchain-accounts/host/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v10/modules/apps/transfer/types"
@@ -26,8 +28,6 @@ import (
 	coredaostypes "github.com/atomone-hub/atomone/x/coredaos/types"
 	govtypes "github.com/atomone-hub/atomone/x/gov/types"
 	photontypes "github.com/atomone-hub/atomone/x/photon/types"
-
-	providerstypes "github.com/allinbits/vaas/x/vaas/provider/types"
 )
 
 func (appKeepers *AppKeepers) GenerateKeys() {
