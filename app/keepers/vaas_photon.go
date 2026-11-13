@@ -12,22 +12,22 @@ import (
 	photontypes "github.com/atomone-hub/atomone/x/photon/types"
 )
 
-// vaasPhotonRate presents x/photon's conversion rate to the VAAS provider,
+// VAASPhotonRate presents x/photon's conversion rate to the VAAS provider,
 // which prices the consumer fees in photons: the rate the ConversionRate
 // query reports, computed from the bond denom and photon supplies.
-type vaasPhotonRate struct {
-	photon  *photonkeeper.Keeper
-	bank    bankkeeper.Keeper
-	staking *stakingkeeper.Keeper
+type VAASPhotonRate struct {
+	Photon  *photonkeeper.Keeper
+	Bank    bankkeeper.Keeper
+	Staking *stakingkeeper.Keeper
 }
 
 // ConversionRate returns how many photons one bond token converts to.
-func (r vaasPhotonRate) ConversionRate(ctx context.Context) (math.LegacyDec, error) {
-	bondDenom, err := r.staking.BondDenom(ctx)
+func (r VAASPhotonRate) ConversionRate(ctx context.Context) (math.LegacyDec, error) {
+	bondDenom, err := r.Staking.BondDenom(ctx)
 	if err != nil {
 		return math.LegacyDec{}, err
 	}
-	bondSupply := r.bank.GetSupply(ctx, bondDenom).Amount.ToLegacyDec()
-	photonSupply := r.bank.GetSupply(ctx, photontypes.Denom).Amount.ToLegacyDec()
-	return r.photon.PhotonConversionRate(ctx, bondSupply, photonSupply), nil
+	bondSupply := r.Bank.GetSupply(ctx, bondDenom).Amount.ToLegacyDec()
+	photonSupply := r.Bank.GetSupply(ctx, photontypes.Denom).Amount.ToLegacyDec()
+	return r.Photon.PhotonConversionRate(ctx, bondSupply, photonSupply), nil
 }
