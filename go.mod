@@ -293,4 +293,4 @@ replace (
 
 replace cosmossdk.io/x/evidence => github.com/atomone-hub/cosmos-sdk/x/evidence v0.1.2-0.20261112114214-e606aa2b81b1
 
-replace github.com/allinbits/vaas => github.com/giunatale/vaas v0.0.0-20261113220825-39f21058648b
+replace github.com/allinbits/vaas => github.com/giunatale/vaas v0.0.0-20261113222544-fa8d1585828e
