@@ -1,11 +1,6 @@
 package atomone
 
 import (
-	no_valupdates_genutil "github.com/allinbits/vaas/x/vaas/no_valupdates_genutil"
-	no_valupdates_staking "github.com/allinbits/vaas/x/vaas/no_valupdates_staking"
-	ibcprovider "github.com/allinbits/vaas/x/vaas/provider"
-	providertypes "github.com/allinbits/vaas/x/vaas/provider/types"
-
 	"encoding/json"
 
 	icatypes "github.com/cosmos/ibc-go/v10/modules/apps/27-interchain-accounts/types"
@@ -56,6 +51,11 @@ import (
 	atomonegovv1 "github.com/atomone-hub/atomone/x/gov/types/v1"
 	"github.com/atomone-hub/atomone/x/photon"
 	photontypes "github.com/atomone-hub/atomone/x/photon/types"
+
+	no_valupdates_genutil "github.com/allinbits/vaas/x/vaas/no_valupdates_genutil"
+	no_valupdates_staking "github.com/allinbits/vaas/x/vaas/no_valupdates_staking"
+	ibcprovider "github.com/allinbits/vaas/x/vaas/provider"
+	providertypes "github.com/allinbits/vaas/x/vaas/provider/types"
 )
 
 var maccPerms = map[string][]string{
