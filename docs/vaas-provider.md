@@ -104,22 +104,31 @@ consistent with it, and `minimum-gas-prices` in `app.toml` naming both
 
 ## Known items
 
-- AtomOne's linter on this pin reports staticcheck SA1019 for
-  `module.AppModule` in `x/photon/module.go` and `app/modules.go`, plus two
-  older deprecations: pre-existing AtomOne code that atomone-sdk e606aa2
-  marks deprecated. For AtomOne `main`'s own move to that pin, not for this
-  wiring.
+- The fee-pool send restriction reads the store once per bank output, 1000
+  gas each. The e2e dynamicfee test's multisend used 4200 outputs, which
+  pushed its estimate past the e2e genesis block cap of 60M gas; it now sends
+  3500 (about 35M gas, still above the dynamicfee target of half the block).
+- The deprecations atomone-sdk e606aa2 marks are answered: `x/photon`
+  asserts `appmodule.AppModule`, the genesis command uses genutil's
+  `Commands`, and `app/modules.go` and the v4 queue migration keep the
+  deprecated types they must, with a `nolint` each. `make lint` is clean.
 - The VAAS `replace` goes away once allinbits/vaas tags a release and
   AtomOne requires it by version.
 
 ## Toward the pull request
 
-1. Rebase onto atomone-hub/atomone `main`; re-run `app/vaas_wiring_test.go`.
-2. Settle the atomone-sdk pin: a release tag carrying the five commits above,
+The pull request is atomone-hub/atomone#393 (branch `feat/vaas-provider`,
+draft), which supersedes #283. It carries this wiring against
+allinbits/vaas `main` instead of the integrated `pre-mvp` tree this branch
+pins, plus the deprecation answers, the e2e test change and a changelog
+entry. What remains before it leaves draft:
+
+1. Settle the atomone-sdk pin: a release tag carrying the five commits above,
    or `main` for the testnet only.
-3. Replace the VAAS fork pin with the release tag.
-4. Changelog entry; a note in `UPGRADING.md` if the branch targets a network
-   upgrade (the provider module adds a store, so an existing network needs a
-   store upgrade and an upgrade handler: none exists yet, the testnet starts
-   from a fresh genesis).
-5. Address the SA1019 reports or carry them with AtomOne's pin move.
+2. Replace the VAAS pseudo-version with the MVP release tag.
+3. If the branch targets a network upgrade, add the provider store to that
+   upgrade's `StoreUpgrades` and a note in `UPGRADING.md`: no upgrade adds it
+   yet, and the testnet starts from a fresh genesis.
+
+This branch stays the integration target for the test networks: rebase it
+onto `main` when AtomOne moves, and re-pin VAAS when `pre-mvp` moves.
