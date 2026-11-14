@@ -8,21 +8,23 @@ keys, modules and go.mod against allinbits/vaas#18), which the protocol has
 moved past. This page is the handover: what the branch changes, why, how it
 was verified, and what turning it into a pull request takes.
 
-Branch base: atomone-hub/atomone `main` at c50c7b09 ("fix(amino)!: align
-LegacyAmino registrations with the proto").
+Branch base: atomone-hub/atomone `main` at 2dfa55c7 ("build(deps): bump
+CometBFT to v0.38.25").
 
 ## Dependency pins
 
-- `github.com/cosmos/cosmos-sdk` and `cosmossdk.io/x/evidence` are replaced
-  by atomone-sdk at `main` e606aa2 (2026-11-12). AtomOne `main` pins the
-  v0.500.7 release line (277cc1fb), which lacks what VAAS depends on: the
-  pre-rotation staking hook (atomone-sdk #137), x/evidence ignoring evidence
-  for unknown validators (#138), the genesis round trip of consensus-key
-  rotation state (#140), the openpgp armor replacement (#157) and the
-  dependency bumps for the published advisories (#158). The x/mint rewrite
-  that follows on atomone-sdk `main` is not taken. The release-line question
-  (a tag that carries these) is open with the atomone-sdk maintainers; the
-  mainnet path is a tag, not a branch.
+- `github.com/cosmos/cosmos-sdk` comes from AtomOne `main` as is: atomone-sdk
+  at ee379fe6 (2026-11-13), the head of the time-based minting stack (#389).
+  It carries what VAAS depends on: the pre-rotation staking hook
+  (atomone-sdk #137), x/evidence ignoring evidence for unknown validators
+  (#138), the genesis round trip of consensus-key rotation state (#140), the
+  openpgp armor replacement (#157) and the dependency bumps for the
+  published advisories (#158). The release-line question (a tag that carries
+  these) is open with the atomone-sdk maintainers; the mainnet path is a
+  tag, not a branch.
+- `cosmossdk.io/x/evidence` is the one pin this branch adds: AtomOne `main`
+  requires cosmossdk.io's v0.1.1, without #138, so it is replaced by
+  atomone-sdk's at the same commit, ee379fe6.
 - `github.com/allinbits/vaas` is replaced by giunatale/vaas at the `pre-mvp`
   integration branch (every open VAAS pull request merged in release order)
   until VAAS tags a release. To move it:
@@ -35,9 +37,6 @@ LegacyAmino registrations with the proto").
 
   `go get github.com/allinbits/vaas@<sha>` resolves against allinbits and
   fails for a commit that only exists on the fork.
-- atomone-sdk e606aa2 adds `BeforeConsensusPubKeyRotation` to the staking
-  hooks interface; `x/coredaos`'s hooks answer it with a no-op
-  (`x/coredaos/keeper/hooks.go`).
 
 ## The wiring
 
@@ -104,22 +103,28 @@ consistent with it, and `minimum-gas-prices` in `app.toml` naming both
 
 ## Known items
 
-- AtomOne's linter on this pin reports staticcheck SA1019 for
-  `module.AppModule` in `x/photon/module.go` and `app/modules.go`, plus two
-  older deprecations: pre-existing AtomOne code that atomone-sdk e606aa2
-  marks deprecated. For AtomOne `main`'s own move to that pin, not for this
-  wiring.
+- The fee-pool send restriction reads the store once per bank output, 1000
+  gas each. The e2e dynamicfee test's multisend used 4200 outputs, which
+  pushed its estimate past the e2e genesis block cap of 60M gas; it now sends
+  3500 (about 35M gas, still above the dynamicfee target of half the block).
+- AtomOne `main` (#389) answers the deprecations atomone-sdk marks with a
+  `nolint` each; the wiring adds none, and `make lint` is clean.
 - The VAAS `replace` goes away once allinbits/vaas tags a release and
   AtomOne requires it by version.
 
 ## Toward the pull request
 
-1. Rebase onto atomone-hub/atomone `main`; re-run `app/vaas_wiring_test.go`.
-2. Settle the atomone-sdk pin: a release tag carrying the five commits above,
+The pull request is atomone-hub/atomone#393 (branch `feat/vaas-provider`,
+draft), which supersedes #283. It carries this wiring against
+allinbits/vaas `main` instead of the integrated `pre-mvp` tree this branch
+pins, plus the e2e test change and a changelog entry. What remains before it leaves draft:
+
+1. Settle the atomone-sdk pin: a release tag carrying the five commits above,
    or `main` for the testnet only.
-3. Replace the VAAS fork pin with the release tag.
-4. Changelog entry; a note in `UPGRADING.md` if the branch targets a network
-   upgrade (the provider module adds a store, so an existing network needs a
-   store upgrade and an upgrade handler: none exists yet, the testnet starts
-   from a fresh genesis).
-5. Address the SA1019 reports or carry them with AtomOne's pin move.
+2. Replace the VAAS pseudo-version with the MVP release tag.
+3. If the branch targets a network upgrade, add the provider store to that
+   upgrade's `StoreUpgrades` and a note in `UPGRADING.md`: no upgrade adds it
+   yet, and the testnet starts from a fresh genesis.
+
+This branch stays the integration target for the test networks: rebase it
+onto `main` when AtomOne moves, and re-pin VAAS when `pre-mvp` moves.
