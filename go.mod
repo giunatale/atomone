@@ -28,7 +28,7 @@ require (
 	github.com/consensys/gnark-crypto v0.18.1
 	github.com/cosmos/cosmos-db v1.1.3
 	github.com/cosmos/cosmos-proto v1.0.0-beta.5
-	github.com/cosmos/cosmos-sdk v0.53.4
+	github.com/cosmos/cosmos-sdk v0.500.0
 	github.com/cosmos/go-bip39 v1.0.0
 	github.com/cosmos/gogoproto v1.7.2
 	github.com/cosmos/ibc-go/v10 v10.7.0
@@ -288,3 +288,5 @@ replace (
 	// replace broken cosmos-sdk dep
 	nhooyr.io/websocket => github.com/coder/websocket v1.8.6
 )
+
+replace cosmossdk.io/x/evidence => github.com/atomone-hub/cosmos-sdk/x/evidence v0.1.2-0.20261113143351-ee379fe63faa
