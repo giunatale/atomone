@@ -44,8 +44,6 @@ cosmossdk.io/store v1.1.2 h1:3HOZG8+CuThREKv6cn3WSohAc6yccxO3hLzwK6rBC7o=
 cosmossdk.io/store v1.1.2/go.mod h1:60rAGzTHevGm592kFhiUVkNC9w7gooSEn5iUBPzHQ6A=
 cosmossdk.io/tools/confix v0.1.2 h1:2hoM1oFCNisd0ltSAAZw2i4ponARPmlhuNu3yy0VwI4=
 cosmossdk.io/tools/confix v0.1.2/go.mod h1:7XfcbK9sC/KNgVGxgLM0BrFbVcR/+6Dg7MFfpx7duYo=
-cosmossdk.io/x/evidence v0.1.1 h1:Ks+BLTa3uftFpElLTDp9L76t2b58htjVbSZ86aoK/E4=
-cosmossdk.io/x/evidence v0.1.1/go.mod h1:OoDsWlbtuyqS70LY51aX8FBTvguQqvFrt78qL7UzeNc=
 cosmossdk.io/x/feegrant v0.1.1 h1:EKFWOeo/pup0yF0svDisWWKAA9Zags6Zd0P3nRvVvw8=
 cosmossdk.io/x/feegrant v0.1.1/go.mod h1:2GjVVxX6G2fta8LWj7pC/ytHjryA6MHAJroBWHFNiEQ=
 cosmossdk.io/x/tx v0.14.0 h1:hB3O25kIcyDW/7kMTLMaO8Ripj3yqs5imceVd6c/heA=
@@ -102,6 +100,8 @@ github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310/go.mod h1:ufUuZ+zHj
 github.com/aryann/difflib v0.0.0-20170710044230-e206f873d14a/go.mod h1:DAHtR1m6lCRdSC2Tm3DSWRPvIPr6xNKyeHdqDQSQT+A=
 github.com/atomone-hub/cosmos-sdk v0.500.3-0.20261113143351-ee379fe63faa h1:EcEJRIddK94YxF14gZP5BzIxgGWeKEm5le7Vd884UJI=
 github.com/atomone-hub/cosmos-sdk v0.500.3-0.20261113143351-ee379fe63faa/go.mod h1:WAGELmlvzpXetHXxQV/79p/GBugTXR3O2iF+HgLKhWw=
+github.com/atomone-hub/cosmos-sdk/x/evidence v0.1.2-0.20261113143351-ee379fe63faa h1:INiAQihsrmGUUbkuPFD9ouoI6f6SzkvDA7VYex0ogXc=
+github.com/atomone-hub/cosmos-sdk/x/evidence v0.1.2-0.20261113143351-ee379fe63faa/go.mod h1:u4fl6d2a+dP2JXaTQxv3YxTRuMP6uAnDxsslxnEGG6k=
 github.com/atomone-hub/cosmos-sdk/x/upgrade v0.1.5-atomone.2 h1:SVPsm3c8pymdbwNjKHF5vwM0B6x4dgkVTbhbYctwBoE=
 github.com/atomone-hub/cosmos-sdk/x/upgrade v0.1.5-atomone.2/go.mod h1:78DcDK3kSaNN7dObcV1FIypDDIfl5W5X1uDyrUyZmWY=
 github.com/aws/aws-lambda-go v1.13.3/go.mod h1:4UKl9IzQMoD+QF79YdCuzCwp8VbmG4VAQwij/eHl5CU=
